@@ -40,8 +40,8 @@ public class Annonce {
     private Commission commission;
 
     @ManyToOne
-    @JoinColumn(name = "idClient", nullable = false)
-    private Utilisateur client;
+    @JoinColumn(name = "idUtilisateur", nullable = false)
+    private Utilisateur utilisateur;
 
     @ManyToOne
     @JoinColumn(name = "idTransmission", nullable = false)
@@ -66,7 +66,7 @@ public class Annonce {
         this.etat = etat;
         this.dateAnnonce = dateAnnonce;
         this.commission = commission;
-        this.client = client;
+        this.utilisateur = client;
         this.transmission = transmission;
         this.carburant = carburant;
         this.modele = modele;
@@ -155,12 +155,12 @@ public class Annonce {
         this.commission = commission;
     }
 
-    public Utilisateur getClient() {
-        return client;
+    public Utilisateur getUtilisateur() {
+        return utilisateur;
     }
 
-    public void setClient(Utilisateur client) {
-        this.client = client;
+    public void setUtilisateur(Utilisateur client) {
+        this.utilisateur = client;
     }
 
     public Transmission getTransmission() {

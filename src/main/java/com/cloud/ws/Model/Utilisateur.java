@@ -8,13 +8,14 @@ public class Utilisateur {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idClient;
+    @Column(name = "idUtilisateur")
+    private int idUtilisateur;
 
-    @Column(name = "nomClient")
-    private String nomClient;
+    @Column(name = "nomUtilisateur")
+    private String nomUtilisateur;
 
-    @Column(name = "prenomClient")
-    private String prenomClient;
+    @Column(name = "prenomUtilisateur")
+    private String prenomUtilisateur;
 
     @Column(name = "dateNaissance")
     private String dateNaissance;
@@ -37,10 +38,10 @@ public class Utilisateur {
     @Column(name = "isAdmin")
     private int isAdmin;
 
-    public Utilisateur(int idClient, String nomClient, String prenomClient, String dateNaissance, int sexe, String email, String password, String adresse, String tel, int isAdmin) {
-        this.idClient = idClient;
-        this.nomClient = nomClient;
-        this.prenomClient = prenomClient;
+    public Utilisateur(int idUtilisateur, String nomUtilisateur, String prenomUtilisateur, String dateNaissance, int sexe, String email, String password, String adresse, String tel, int isAdmin) {
+        this.idUtilisateur = idUtilisateur;
+        this.nomUtilisateur = nomUtilisateur;
+        this.prenomUtilisateur = prenomUtilisateur;
         this.dateNaissance = dateNaissance;
         this.sexe = sexe;
         this.email = email;
@@ -53,28 +54,28 @@ public class Utilisateur {
     public Utilisateur() {
     }
 
-    public int getIdClient() {
-        return idClient;
+    public int getIdUtilisateur() {
+        return idUtilisateur;
     }
 
-    public void setIdClient(int idClient) {
-        this.idClient = idClient;
+    public void setIdUtilisateur(int idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
     }
 
-    public String getNomClient() {
-        return nomClient;
+    public String getNomUtilisateur() {
+        return nomUtilisateur;
     }
 
-    public void setNomClient(String nomClient) {
-        this.nomClient = nomClient;
+    public void setNomUtilisateur(String nomUtilisateur) {
+        this.nomUtilisateur = nomUtilisateur;
     }
 
-    public String getPrenomClient() {
-        return prenomClient;
+    public String getPrenomUtilisateur() {
+        return prenomUtilisateur;
     }
 
-    public void setPrenomClient(String prenomClient) {
-        this.prenomClient = prenomClient;
+    public void setPrenomUtilisateur(String prenomUtilisateur) {
+        this.prenomUtilisateur = prenomUtilisateur;
     }
 
     public String getDateNaissance() {
