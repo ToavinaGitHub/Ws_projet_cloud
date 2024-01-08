@@ -56,7 +56,7 @@ public class AnnonceService {
     //Modifier Etat Annonce
     public void updateEtatAnnonce(int idAnnonce,double prixVente,int etat){
         Annonce a = annonceRepository.findAnnonceByIdAnnonce(idAnnonce);
-        Annonce temp  = new Annonce(idAnnonce,a.getAnnee(),a.getKilometrage(),a.getNbPorte(),a.getDescription(),a.getPrixDemande(),prixVente,etat,a.getDateAnnonce(),a.getCommission(),a.getUtilisateur(),a.getTransmission(),a.getCarburant(),a.getModele());
+        Annonce temp  = new Annonce(idAnnonce,a.getKilometrage(),a.getNbPorte(),a.getDescription(),a.getPrixDemande(),prixVente,etat,a.getDateAnnonce(),a.getCommission(),a.getUtilisateur(),a.getTransmission(),a.getCarburant(),a.getModele());
         annonceRepository.delete(a);
         annonceRepository.save(temp);
     }
@@ -65,7 +65,6 @@ public class AnnonceService {
     public void ValiderAnnonce(int idAnnonce){
         this.updateEtatAnnonce(idAnnonce,0,5);
     }
-
 
 
 
