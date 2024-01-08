@@ -11,9 +11,6 @@ public class Annonce {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idAnnonce;
 
-    @Column(name = "annee")
-    private String annee;
-
     @Column(name = "kilometrage")
     private String kilometrage;
 
@@ -55,9 +52,8 @@ public class Annonce {
     @JoinColumn(name = "idModele", nullable = false)
     private Modele modele;
 
-    public Annonce(int idAnnonce, String annee, String kilometrage, Integer nbPorte, String description, Double prixDemande, Double prixVente, int etat, Timestamp dateAnnonce, Commission commission, Utilisateur client, Transmission transmission, Carburant carburant, Modele modele) {
+    public Annonce(int idAnnonce, String kilometrage, Integer nbPorte, String description, Double prixDemande, Double prixVente, int etat, Timestamp dateAnnonce, Commission commission, Utilisateur client, Transmission transmission, Carburant carburant, Modele modele) {
         this.idAnnonce = idAnnonce;
-        this.annee = annee;
         this.kilometrage = kilometrage;
         this.nbPorte = nbPorte;
         this.description = description;
@@ -83,13 +79,6 @@ public class Annonce {
         this.idAnnonce = idAnnonce;
     }
 
-    public String getAnnee() {
-        return annee;
-    }
-
-    public void setAnnee(String annee) {
-        this.annee = annee;
-    }
 
     public String getKilometrage() {
         return kilometrage;
