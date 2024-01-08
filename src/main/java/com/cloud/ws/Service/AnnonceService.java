@@ -165,4 +165,44 @@ public class AnnonceService {
         }
     }
 
+    /*************Statistique***************/
+
+    //Nombre d'annonce par mois par année
+    public int[] nbAnnonceMoisAnnee(int annee){
+        int[] res = new int[12];
+        for (int i = 1; i <= 12 ; i++) {
+            res[i-1] = annonceRepository.countByMoisAndAnnee(i,annee);
+        }
+        return res;
+    }
+
+    //Nombre annonce par mois par année par jour
+    public int[] nbAnnonceMoisAnneeJours(int mois,int annee){
+        int[] res = new int[30];
+
+        for (int i = 1; i <=res.length; i++) {
+            res[i-1] = annonceRepository.countByMoisAndAnneeAndJour(mois,annee,i);
+        }
+        return res;
+    }
+
+    //Nombre de voiture vendu par mois par année
+    public int[] nbVoitureVenduMoisAnnee(int annee){
+        int[] res = new int[12];
+        for (int i = 1; i <= 12 ; i++) {
+            res[i-1] = annonceRepository.voitureVenduParMoisParAnnee(i,annee);
+        }
+        return res;
+    }
+
+    //Nombre de voiture vendu par mois par année par jour
+    public int[] nbVoitureVenduMoisAnneeJours(int mois,int annee){
+        int[] res = new int[30];
+
+        for (int i = 1; i <=res.length; i++) {
+            res[i-1] = annonceRepository.voitureVenduParMoisParAnneeParJours(mois,annee,i);
+        }
+        return res;
+    }
+
 }
