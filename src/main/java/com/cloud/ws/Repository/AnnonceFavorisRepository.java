@@ -9,6 +9,6 @@ import java.util.Vector;
 
 public interface AnnonceFavorisRepository extends JpaRepository<AnnonceFavoris,Integer> {
 
-    @Query("SELECT a.annonce FROM AnnonceFavoris a WHERE a.utilisateur.idUtilisateur=?1")
+    @Query("SELECT a.annonce FROM AnnonceFavoris a WHERE a.utilisateur.idUtilisateur=?1 ")
     public Vector<Annonce> getByUtilisateur(int idUtilisateur);
 }
