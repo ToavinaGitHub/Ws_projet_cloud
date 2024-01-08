@@ -26,10 +26,12 @@ public class AnnonceService {
         return (Vector<Annonce>) annonceRepository.findAll();
     }
 
+    // Maka annonce en cours de demande
     public Vector<Annonce> getAnnonceEnDemande(){
         return annonceRepository.findAnnonceByEtat(0);
     }
 
+    //Maka annonce izay mbola tsy vendu
     public Vector<Annonce> getAnnonceDispo(){
         return annonceRepository.findAnnonceByEtat(5);
     }
@@ -50,14 +52,20 @@ public class AnnonceService {
         return annonceFavorisRepository.getByUtilisateur(idClient);
     }
 
-    public void updateEtatAnnonce(int idAnnonce,int etat){
-        Annonce a = annonceRepository.findAnnonceByIdAnnonce(idAnnonce);
 
-        Annonce temp  = new Annonce(idAnnonce,a.getAnnee(),a.getKilometrage(),a.getNbPorte(),a.getDescription(),a.getPrixDemande(),a.getPrixVente(),etat,a.getDateAnnonce(),a.getCommission(),a.getUtilisateur(),a.getTransmission(),a.getCarburant(),a.getModele());
+    //Modifier Etat Annonce
+    public void updateEtatAnnonce(int idAnnonce,double prixVente,int etat){
+        Annonce a = annonceRepository.findAnnonceByIdAnnonce(idAnnonce);
+        Annonce temp  = new Annonce(idAnnonce,a.getAnnee(),a.getKilometrage(),a.getNbPorte(),a.getDescription(),a.getPrixDemande(),prixVente,etat,a.getDateAnnonce(),a.getCommission(),a.getUtilisateur(),a.getTransmission(),a.getCarburant(),a.getModele());
         annonceRepository.delete(a);
         annonceRepository.save(temp);
-
     }
+
+    //Valider Annonce
+    public void ValiderAnnonce(int idAnnonce){
+        this.updateEtatAnnonce(idAnnonce,0,5);
+    }
+
 
 
 

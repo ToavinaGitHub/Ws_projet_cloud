@@ -12,14 +12,10 @@ public class Moteur {
     @Column(name = "nomMoteur", nullable = false)
     private String nomMoteur;
 
-    @ManyToOne
-    @JoinColumn(name = "idModele", nullable = false)
-    private Modele modele;
 
-    public Moteur(int idMoteur, String nomMoteur, Modele modele) {
+    public Moteur(int idMoteur, String nomMoteur ) {
         this.idMoteur = idMoteur;
         this.nomMoteur = nomMoteur;
-        this.modele = modele;
     }
 
     public Moteur() {
@@ -41,11 +37,4 @@ public class Moteur {
         this.nomMoteur = nomMoteur;
     }
 
-    public Modele getModele() {
-        return modele;
-    }
-
-    public void setModele(Modele modele) {
-        this.modele = modele;
-    }
 }

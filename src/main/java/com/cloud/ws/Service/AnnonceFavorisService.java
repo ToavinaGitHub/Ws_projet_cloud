@@ -9,9 +9,8 @@ import java.util.Vector;
 
 @Service
 public class AnnonceFavorisService {
-
     @Autowired
-    AnnonceFavorisRepository annonceFavorisRepository;
+    AnnonceFavorisRepository  annonceFavorisRepository;
     public Vector<AnnonceFavoris> getAll(){
         return (Vector<AnnonceFavoris>) annonceFavorisRepository.findAll();
     }
