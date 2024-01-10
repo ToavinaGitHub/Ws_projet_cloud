@@ -3,7 +3,7 @@ Contain Web Service
 
 -Some config : 
 
-  -JDK 17
+  -JDK 21
   -postgresql
   -mongodb
 
