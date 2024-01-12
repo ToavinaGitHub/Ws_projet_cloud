@@ -1,8 +1,11 @@
 package com.cloud.ws.Controller;
 
 
-import com.cloud.ws.Model.Annonce;
+import com.cloud.ws.Model.*;
+import com.cloud.ws.Repository.*;
 import com.cloud.ws.Service.AnnonceService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,15 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AnnonceController {
 
+    @Autowired
+    TransmissionRepository transmissionRepository;
+
+    @Autowired
+    MarqueRepository marqueRepository;
+
+    @Autowired
+    MoteurRepository moteurRepository;
+
+    @Autowired
+    CategorieRepository categorieRepository;
+
+    @Autowired
+    CarburantRepository carburantRepository;
+
     AnnonceService annonceService;
     /*------------CRUD---------------*/
-
     //All annonce
     @GetMapping("/Annonces")
     public Iterable<Annonce> getAll(){
         return annonceService.getAll();
     }
-
     //Annonce en demande de validation
     @GetMapping("/AnnoncesEnDemande")
     public Iterable<Annonce> getAllAnnonceDemande(){
@@ -62,9 +78,40 @@ public class AnnonceController {
         return annonceService.nbVoitureVenduMoisAnnee(annee);
     }
     //Nombre voiture vendu par jour hoan année sy mois donné
-    @GetMapping("/statNbVoitureVenduAnneeMois")
+    @GetMapping("/statNbVoiturmeVenduAnneeMois")
     public int[] getStatNbVoitureVenduParAnneeParMois(@RequestParam int annee,@RequestParam int mois){
         return annonceService.nbVoitureVenduMoisAnneeJours(mois,annee);
+    }
+
+
+    @CrossOrigin(origins = "*" , allowedHeaders = "*")
+    @GetMapping("/transmissions")
+    public Iterable<Transmission> getAllTransmission(){
+        return transmissionRepository.findAll();
+    }
+
+    @CrossOrigin(origins = "*" , allowedHeaders = "*")
+    @GetMapping("/marques")
+    public Iterable<Marque> getAllMarque(){
+        return marqueRepository.findAll();
+    }
+
+    @CrossOrigin(origins = "*" , allowedHeaders = "*")
+    @GetMapping("/moteurs")
+    public Iterable<Moteur> getAllMoteur(){
+        return moteurRepository.findAll();
+    }
+
+    @CrossOrigin(origins = "*" , allowedHeaders = "*")
+    @GetMapping("/categories")
+    public Iterable<Categorie> getAllCategorie(){
+        return categorieRepository.findAll();
+    }
+
+    @CrossOrigin(origins = "*" , allowedHeaders = "*")
+    @GetMapping("/carburants")
+    public Iterable<Carburant> getAllCarburant(){
+        return carburantRepository.findAll();
     }
 
 
