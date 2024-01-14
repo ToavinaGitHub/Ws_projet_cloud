@@ -12,6 +12,8 @@ public class Transmission {
     @Column(name = "nomTransmission")
     private String nomTransmission;
 
+    @Column(name = "etat")
+    private int etat;
     public Transmission(int idTransmission, String nomTransmission) {
         this.idTransmission = idTransmission;
         this.nomTransmission = nomTransmission;
@@ -34,6 +36,14 @@ public class Transmission {
 
     public void setNomTransmission(String nomTransmission) {
         this.nomTransmission = nomTransmission;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 }
 

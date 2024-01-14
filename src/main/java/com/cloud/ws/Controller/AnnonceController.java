@@ -84,36 +84,6 @@ public class AnnonceController {
     }
 
 
-    @CrossOrigin(origins = "*" , allowedHeaders = "*")
-    @GetMapping("/transmissions")
-    public Iterable<Transmission> getAllTransmission(){
-        return transmissionRepository.findAll();
-    }
-
-    @CrossOrigin(origins = "*" , allowedHeaders = "*")
-    @GetMapping("/marques")
-    public Iterable<Marque> getAllMarque(){
-        return marqueRepository.findAll();
-    }
-
-    @CrossOrigin(origins = "*" , allowedHeaders = "*")
-    @GetMapping("/moteurs")
-    public Iterable<Moteur> getAllMoteur(){
-        return moteurRepository.findAll();
-    }
-
-    @CrossOrigin(origins = "*" , allowedHeaders = "*")
-    @GetMapping("/categories")
-    public Iterable<Categorie> getAllCategorie(){
-        return categorieRepository.findAll();
-    }
-
-    @CrossOrigin(origins = "*" , allowedHeaders = "*")
-    @GetMapping("/carburants")
-    public Iterable<Carburant> getAllCarburant(){
-        return carburantRepository.findAll();
-    }
-
 
 
 

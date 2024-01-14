@@ -51,6 +51,18 @@ public class Utilisateur {
         this.isAdmin = isAdmin;
     }
 
+    public Utilisateur(String nomUtilisateur, String prenomUtilisateur, String dateNaissance, int sexe, String email, String password, String adresse, String tel, int isAdmin) {
+        this.nomUtilisateur = nomUtilisateur;
+        this.prenomUtilisateur = prenomUtilisateur;
+        this.dateNaissance = dateNaissance;
+        this.sexe = sexe;
+        this.email = email;
+        this.password = password;
+        this.adresse = adresse;
+        this.tel = tel;
+        this.isAdmin = isAdmin;
+    }
+
     public Utilisateur() {
     }
 

@@ -13,6 +13,9 @@ public class Marque {
     @Column(name = "nomMarque")
     private String nomMarque;
 
+    @Column(name = "etat")
+    private int etat;
+
     public Marque() {
     }
 
@@ -35,6 +38,14 @@ public class Marque {
 
     public void setNomMarque(String nomMarque) {
         this.nomMarque = nomMarque;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 
 }
