@@ -16,6 +16,9 @@ public class MoteurModele {
     @JoinColumn(name = "idModele" , nullable = false)
     Modele modele;
 
+    @Column(name = "etat")
+    private int etat;
+
     public MoteurModele(int idMoteurModele, Moteur moteur, Modele modele) {
         this.idMoteurModele = idMoteurModele;
         this.moteur = moteur;
@@ -45,5 +48,13 @@ public class MoteurModele {
     }
     public void setModele(Modele modele) {
         this.modele = modele;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 }

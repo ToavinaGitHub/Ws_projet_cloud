@@ -12,6 +12,9 @@ public class Carburant {
     @Column(name = "nomCarburant")
     private String nomCarburant;
 
+    @Column(name = "etat")
+    private int etat;
+
     public Carburant(int idCarburant, String nomCarburant) {
         this.idCarburant = idCarburant;
         this.nomCarburant = nomCarburant;
@@ -34,6 +37,14 @@ public class Carburant {
 
     public void setNomCarburant(String nomCarburant) {
         this.nomCarburant = nomCarburant;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 }
 

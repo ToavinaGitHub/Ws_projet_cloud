@@ -19,6 +19,8 @@ public class Modele {
     @ManyToOne
     @JoinColumn(name = "idMarque", nullable = false)
     private Marque marque;
+    @Column(name = "etat")
+    private int etat;
 
     public Modele(int idModele, String nomModele, Categorie categorie, Marque marque) {
         this.idModele = idModele;
@@ -60,6 +62,14 @@ public class Modele {
 
     public void setMarque(Marque marque) {
         this.marque = marque;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 }
 

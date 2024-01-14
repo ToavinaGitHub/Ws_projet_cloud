@@ -12,6 +12,8 @@ public class Moteur {
     @Column(name = "nomMoteur", nullable = false)
     private String nomMoteur;
 
+    @Column(name = "etat")
+    private int etat;
 
     public Moteur(int idMoteur, String nomMoteur ) {
         this.idMoteur = idMoteur;
@@ -35,6 +37,14 @@ public class Moteur {
 
     public void setNomMoteur(String nomMoteur) {
         this.nomMoteur = nomMoteur;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 
 }
