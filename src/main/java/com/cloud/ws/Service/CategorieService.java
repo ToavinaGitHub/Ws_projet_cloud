@@ -24,6 +24,7 @@ public class CategorieService {
         Categorie categorie= new Categorie();
         categorie.setNomCategorie(nom);
         categorie= categorieRepository.save(categorie);
+        categorie.setEtat(0);
         return categorie;
     }
 

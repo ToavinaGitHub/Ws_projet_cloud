@@ -1,28 +1,21 @@
 package com.cloud.ws.Controller;
 
-import com.cloud.ws.Model.Utilisateur;
-import com.cloud.ws.Repository.UtilisateurRepository;
-import com.cloud.ws.Auth.JwtUtil;
+import com.cloud.ws.Auth.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api/v1/auth/")
 public class AuthController {
-    private final AuthenticationManager authenticationManager;
-    private UtilisateurRepository utilisateurRepository;
-    private JwtUtil jwtUtil;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil, UtilisateurRepository utilisateurRepository) {
-        this.authenticationManager = authenticationManager;
-        this.utilisateurRepository = utilisateurRepository;
-        this.jwtUtil = jwtUtil;
+    private final AuthenticationService authenticationService;
+
+    public AuthController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/auth/login")
+
+   /* @PostMapping("/auth/login")
     public String login(String email, String password)  {
         try {
             Authentication authentication =
@@ -34,6 +27,19 @@ public class AuthController {
         }catch (Exception e){
             return e.getMessage();
         }
+    }*/
+
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/register")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
+        return ResponseEntity.ok(authenticationService.register(request));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest request){
+        return ResponseEntity.ok(authenticationService.authenticate(request));
+
+    }
 }

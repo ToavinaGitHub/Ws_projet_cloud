@@ -20,6 +20,7 @@ public class MoteurService {
     public Moteur saveMoteur(String nom){
         Moteur moteur= new Moteur();
         moteur.setNomMoteur(nom);
+        moteur.setEtat(0);
         return moteurRepository.save(moteur);
     }
 

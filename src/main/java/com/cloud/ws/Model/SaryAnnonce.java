@@ -1,5 +1,6 @@
 package com.cloud.ws.Model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -14,6 +15,7 @@ public class SaryAnnonce {
 
     @ManyToOne
     @JoinColumn(name = "idAnnonce", nullable = false)
+    @JsonBackReference
     private Annonce annonce;
 
     public SaryAnnonce(int idSaryAnnonce, String sary, Annonce annonce) {

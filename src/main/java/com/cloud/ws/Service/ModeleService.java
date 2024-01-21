@@ -25,6 +25,7 @@ public class ModeleService {
         modele.setNomModele(nom);
         modele.setCategorie(categorie);
         modele.setMarque(marque);
+        modele.setEtat(0);
         modele= modeleRepository.save(modele);
         return modele;
     }
@@ -47,5 +48,9 @@ public class ModeleService {
     public Modele updateModele(Modele modele, String nom){
         modele.setNomModele(nom);
         return modeleRepository.save(modele);
+    }
+
+    public List<Modele> getAll(){
+        return modeleRepository.findAll();
     }
 }

@@ -34,6 +34,11 @@ public class ModeleController {
         Modele modele= modeleService.saveModele(nom,categorie,marque);
         return modele;
     }
+    @GetMapping("/modeles")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public List<Modele> saveModele(){
+        return modeleService.getAll();
+    }
 
     @GetMapping("/modeles/{id}")
     @CrossOrigin(origins = "*", allowedHeaders = "*")

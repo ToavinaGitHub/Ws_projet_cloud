@@ -1,9 +1,6 @@
 package com.cloud.ws.Service;
 
-import com.cloud.ws.Model.Annonce;
-import com.cloud.ws.Model.AnnonceFavoris;
-import com.cloud.ws.Model.SaryAnnonce;
-import com.cloud.ws.Model.Utilisateur;
+import com.cloud.ws.Model.*;
 import com.cloud.ws.Repository.AnnonceFavorisRepository;
 import com.cloud.ws.Repository.AnnonceRepository;
 import com.cloud.ws.Repository.SaryAnnonceRepository;
@@ -19,7 +16,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Vector;
 
 @Service
@@ -37,28 +36,32 @@ public class AnnonceService {
     @Autowired
     SaryAnnonceRepository saryAnnonceRepository;
 
-    public Vector<Annonce> getAll(){
-        return (Vector<Annonce>) annonceRepository.findAll();
+    public void save(Annonce annonce){
+        annonceRepository.save(annonce);
+    }
+
+    public List<Annonce> getAll(){
+        return annonceRepository.findAll();
     }
 
     // Maka annonce en cours de demande
-    public Vector<Annonce> getAnnonceEnDemande(){
+    public List<Annonce> getAnnonceEnDemande(){
         return annonceRepository.findAnnonceByEtat(0);
     }
 
     //Maka annonce izay mbola tsy vendu
-    public Vector<Annonce> getAnnonceDispo(){
+    public List<Annonce> getAnnonceDispo(){
         return annonceRepository.findAnnonceByEtat(5);
     }
 
     //Maka Annonce par client par Etat
-    public Vector<Annonce> getAnnonceClientEtat(int idClient,int etat){
+    public List<Annonce> getAnnonceClientEtat(int idClient,int etat){
         Utilisateur u = utilisateurRepository.findUtilisateurByIdUtilisateur(idClient);
         return annonceRepository.findAnnonceByUtilisateurAndEtat(u,etat);
     }
 
     //Izay efa vendu
-    public Vector<Annonce> getAnnonceClientHistorique(int idClient){
+    public List<Annonce> getAnnonceClientHistorique(int idClient){
         return this.getAnnonceClientEtat(idClient,10);
     }
 
@@ -89,12 +92,9 @@ public class AnnonceService {
 
     //Modifier Etat Annonce
     public ResponseEntity<String> updateEtatAnnonce(int idAnnonce,double prixVente,int etat){
-        Annonce a = annonceRepository.findAnnonceByIdAnnonce(idAnnonce);
-        Annonce temp  = new Annonce(idAnnonce,a.getKilometrage(),a.getNbPorte(),a.getDescription(),a.getPrixDemande(),prixVente,etat,a.getDateAnnonce(),a.getCommission(),a.getUtilisateur(),a.getTransmission(),a.getCarburant(),a.getModele());
-
         try{
-            annonceRepository.delete(a);
-            annonceRepository.save(temp);
+            annonceRepository.updateEtatObjet(etat,idAnnonce,prixVente);
+            System.out.println("ato");
             return ResponseEntity.ok("Etat annonce modifié avec succes");
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Etat annonce non modifié");
@@ -103,15 +103,36 @@ public class AnnonceService {
     }
 
     //Valider Annonce
-    public ResponseEntity<String> ValiderAnnonce(int idAnnonce){
+    public void ValiderAnnonce(int idAnnonce){
         try {
             this.updateEtatAnnonce(idAnnonce,0,5);
-            return ResponseEntity.ok("Annonce validé avec succes");
+            ResponseEntity.ok("Annonce validé avec succes");
         }catch (Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Annonce non validé");
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Annonce non validé");
         }
 
     }
+
+    //Refuser Annonce
+    public void RefuserAnnonce(int idAnnonce){
+        try {
+            this.updateEtatAnnonce(idAnnonce,0,-5);
+            ResponseEntity.ok("Annonce refusé avec succes");
+        }catch (Exception e){
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Annonce non validé");
+        }
+    }
+
+    //Mettre Annonce en vendu
+    public void AnnonceToVendu(int idAnnonce){
+        try {
+            this.updateEtatAnnonce(idAnnonce,0,10);
+            ResponseEntity.ok("Annonce vendu avec succes");
+        }catch (Exception e){
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Annonce non validé");
+        }
+    }
+
 
     //Inserer Annonce
     public ResponseEntity<String> insertAnnonce(Annonce a){
@@ -195,6 +216,16 @@ public class AnnonceService {
         return res;
     }
 
+    //Marque mar mois
+    public List<String> bestSoldes(int annee){
+        List<Marque> all = new ArrayList<>();
+        List<String> res = new ArrayList<>();
+        for (int i = 1; i <= 12 ; i++) {
+           res.add((annonceRepository.bestCarSoldes(i,annee)));
+        }
+        return res;
+    }
+
     //Nombre de voiture vendu par mois par année par jour
     public int[] nbVoitureVenduMoisAnneeJours(int mois,int annee){
         int[] res = new int[30];
@@ -203,6 +234,20 @@ public class AnnonceService {
             res[i-1] = annonceRepository.voitureVenduParMoisParAnneeParJours(mois,annee,i);
         }
         return res;
+    }
+
+    //Prix de voiture par mois par année
+    public Double[] prixParMois(int annee){
+        Double[] res = new Double[12];
+        for (int i = 1; i <= 12 ; i++) {
+
+            res[i-1] = annonceRepository.prixMoyenneVenduParMoisParAnnee(i,annee);
+        }
+        return res;
+    }
+
+    public Double revenuAnnuel(int annee){
+        return annonceRepository.prixParAns(annee);
     }
 
 }

@@ -11,4 +11,6 @@ public interface ModeleRepository extends JpaRepository<Modele, Long> {
     @Query("SELECT modele from Modele modele where modele.marque.idMarque= :idMarque and modele.marque.etat=0 and modele.etat=0")
     public List<Modele> getModelesByMarque(int idMarque);
     public Modele getModeleByIdModele(int idModele);
+
+    
 }

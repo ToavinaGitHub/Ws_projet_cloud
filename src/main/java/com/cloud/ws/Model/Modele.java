@@ -22,6 +22,7 @@ public class Modele {
     @Column(name = "etat")
     private int etat;
 
+
     public Modele(int idModele, String nomModele, Categorie categorie, Marque marque) {
         this.idModele = idModele;
         this.nomModele = nomModele;

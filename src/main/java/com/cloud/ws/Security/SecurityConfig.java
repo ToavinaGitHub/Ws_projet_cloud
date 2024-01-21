@@ -15,10 +15,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig {
 
+public class SecurityConfig {
+/*
     private final CustomUserDetailsService userDetailsService;
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
@@ -42,7 +41,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 //.requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/**").permitAll()
-                .anyRequest().authenticated()
+
+                //.anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
@@ -63,4 +63,7 @@ public class SecurityConfig {
             registry.addMapping("/**");
         }
     }
+
+
+ */
 }
