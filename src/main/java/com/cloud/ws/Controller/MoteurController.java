@@ -39,7 +39,8 @@ public class MoteurController {
     }
 
     @PutMapping("/moteur/{id}")
-    public Moteur updateMoteur(@PathVariable int id,String nom){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Moteur updateMoteur(@PathVariable int id,@RequestParam String nom){
         Moteur moteur= moteurService.getMoteurById(id);
         return moteurService.updateMoteur(moteur,nom);
     }

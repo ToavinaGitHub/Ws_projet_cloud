@@ -22,7 +22,8 @@ public class CarburantService {
         Carburant carburant= new Carburant();
         carburant.setNomCarburant(nom);
         carburant.setEtat(0);
-        carburant= carburantRepository.save(carburant);
+
+        carburantRepository.save(carburant);
         return carburant;
     }
 

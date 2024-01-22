@@ -38,7 +38,8 @@ public class TransmissionController {
     }
 
     @PutMapping("/transmission/{id}")
-    public Transmission updateTransmission(@PathVariable int id, String nom){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Transmission updateTransmission(@PathVariable int id,@RequestParam String nom){
         Transmission transmission= transmissionService.getById(id);
         return transmissionService.updateTransmission(transmission,nom);
     }

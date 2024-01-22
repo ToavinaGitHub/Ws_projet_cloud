@@ -38,8 +38,10 @@ public class CategorieController {
         categorieService.deleteCategorie(categorie);
     }
 
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/categorie/{id}")
-    public Categorie updateCategorie(@PathVariable int id,String nom){
+    public Categorie updateCategorie(@PathVariable int id,@RequestParam String nom){
         Categorie categorie= categorieService.getById(id);
         return categorieService.updateCategorie(categorie,nom);
     }

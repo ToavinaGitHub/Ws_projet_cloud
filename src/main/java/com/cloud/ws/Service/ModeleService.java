@@ -51,6 +51,6 @@ public class ModeleService {
     }
 
     public List<Modele> getAll(){
-        return modeleRepository.findAll();
+        return modeleRepository.getAllModele();
     }
 }

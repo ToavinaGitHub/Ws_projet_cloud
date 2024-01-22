@@ -36,7 +36,8 @@ public class MarqueController {
     }
 
     @PutMapping("/marque/{id}")
-    public Marque updateMarque(@PathVariable int id,String nom){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Marque updateMarque(@PathVariable int id,@RequestParam String nom){
         Marque marque= marqueService.getById(id);
         return marqueService.updateMarque(marque,nom);
     }

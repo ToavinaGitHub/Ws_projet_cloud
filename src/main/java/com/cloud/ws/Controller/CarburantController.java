@@ -38,7 +38,8 @@ public class CarburantController {
     }
 
     @PutMapping("/carburant/{id}")
-    public Carburant updateCarburant(@PathVariable int id,String nom){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Carburant updateCarburant(@PathVariable int id,@RequestParam String nom){
         Carburant carburant= carburantService.getById(id);
         return carburantService.updateCarburant(carburant,nom);
     }

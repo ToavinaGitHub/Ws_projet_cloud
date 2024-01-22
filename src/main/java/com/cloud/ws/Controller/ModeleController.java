@@ -55,7 +55,8 @@ public class ModeleController {
     }
 
     @PutMapping("/modele/{id}")
-    public Modele updateModele(@PathVariable int id,String nom){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Modele updateModele(@PathVariable int id,@RequestParam String nom){
         Modele modele= modeleService.getModeleById(id);
         return modeleService.updateModele(modele,nom);
     }
