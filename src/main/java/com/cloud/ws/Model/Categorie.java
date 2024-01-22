@@ -11,6 +11,9 @@ public class Categorie {
     @Column(name = "nomCategorie")
     private String nomCategorie;
 
+    @Column(name = "etat")
+    private int etat;
+
     public Categorie(int idCategorie, String nomCategorie) {
         this.idCategorie = idCategorie;
         this.nomCategorie = nomCategorie;
@@ -33,5 +36,13 @@ public class Categorie {
 
     public void setNomCategorie(String nomCategorie) {
         this.nomCategorie = nomCategorie;
+    }
+
+    public int getEtat() {
+        return etat;
+    }
+
+    public void setEtat(int etat) {
+        this.etat = etat;
     }
 }

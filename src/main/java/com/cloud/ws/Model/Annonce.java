@@ -1,8 +1,12 @@
 package com.cloud.ws.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Annonce")
@@ -33,24 +37,37 @@ public class Annonce {
     private Timestamp dateAnnonce;
 
     @ManyToOne
-    @JoinColumn(name = "idCommission", nullable = false)
+    @JoinColumn(name = "idCommission")
     private Commission commission;
 
     @ManyToOne
-    @JoinColumn(name = "idUtilisateur", nullable = false)
+    @JoinColumn(name = "idUtilisateur")
     private Utilisateur utilisateur;
 
     @ManyToOne
-    @JoinColumn(name = "idTransmission", nullable = false)
+    @JoinColumn(name = "idTransmission")
     private Transmission transmission;
 
     @ManyToOne
-    @JoinColumn(name = "idCarburant", nullable = false)
+    @JoinColumn(name = "idCarburant")
     private Carburant carburant;
 
     @ManyToOne
     @JoinColumn(name = "idModele", nullable = false)
     private Modele modele;
+
+
+    @ManyToOne
+    @JoinColumn(name = "idAnneeModele", nullable = false, columnDefinition = "integer default 0")
+    private AnneeModele anneeModele;
+
+    @ManyToOne
+    @JoinColumn(name = "idMoteurModele", nullable = false, columnDefinition = "integer default 0")
+    private MoteurModele moteurModele;
+
+    @OneToMany(mappedBy = "annonce", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    Set<SaryAnnonce> saryAnnonces;
 
     public Annonce(int idAnnonce, String kilometrage, Integer nbPorte, String description, Double prixDemande, Double prixVente, int etat, Timestamp dateAnnonce, Commission commission, Utilisateur client, Transmission transmission, Carburant carburant, Modele modele) {
         this.idAnnonce = idAnnonce;
@@ -69,6 +86,30 @@ public class Annonce {
     }
 
     public Annonce() {
+    }
+
+    public AnneeModele getAnneeModele() {
+        return anneeModele;
+    }
+
+    public void setAnneeModele(AnneeModele anneeModele) {
+        this.anneeModele = anneeModele;
+    }
+
+    public MoteurModele getMoteurModele() {
+        return moteurModele;
+    }
+
+    public void setMoteurModele(MoteurModele moteurModele) {
+        this.moteurModele = moteurModele;
+    }
+
+    public Set<SaryAnnonce> getSaryAnnonces() {
+        return saryAnnonces;
+    }
+
+    public void setSaryAnnonces(Set<SaryAnnonce> saryAnnonces) {
+        this.saryAnnonces = saryAnnonces;
     }
 
     public int getIdAnnonce() {
