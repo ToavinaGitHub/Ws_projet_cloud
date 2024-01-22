@@ -29,7 +29,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-
     private final JwtService jwtService;
 
     private final UserDetailsService userDetailsService;
