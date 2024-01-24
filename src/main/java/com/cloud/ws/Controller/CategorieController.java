@@ -25,8 +25,9 @@ public class CategorieController {
         return categorieService.saveCategorie(nom);
     }
 
-    @GetMapping("/categories")
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/categories")
     public List<Categorie> getAllCategorie(){
         return categorieService.getAllCategorie();
     }
