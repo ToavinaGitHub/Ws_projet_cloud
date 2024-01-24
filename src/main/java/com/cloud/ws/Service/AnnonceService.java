@@ -240,7 +240,6 @@ public class AnnonceService {
     public Double[] prixParMois(int annee){
         Double[] res = new Double[12];
         for (int i = 1; i <= 12 ; i++) {
-
             res[i-1] = annonceRepository.prixMoyenneVenduParMoisParAnnee(i,annee);
         }
         return res;
@@ -249,5 +248,9 @@ public class AnnonceService {
     public Double revenuAnnuel(int annee){
         return annonceRepository.prixParAns(annee);
     }
+
+    /*--------------------Some mobile app needs---------------------*/
+
+
 
 }
