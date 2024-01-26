@@ -3,14 +3,12 @@ package com.cloud.ws.Controller;
 import com.cloud.ws.Model.Commission;
 import com.cloud.ws.Service.CommissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class CommissionController {
@@ -33,6 +31,13 @@ public class CommissionController {
         calendar.set(Calendar.MILLISECOND, 0);*/
         Date daty = calendar.getTime();
         return commissionService.saveCommission(valeur,daty);
+    }
+
+    @GetMapping("/commissions")
+    @CrossOrigin(origins = "*" , allowedHeaders = "*")
+
+    public List<Commission> getAll(){
+        return commissionService.all();
     }
 
 }

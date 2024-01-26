@@ -32,9 +32,15 @@ public interface AnnonceRepository extends JpaRepository<Annonce,Integer> {
     int countByMoisAndAnneeAndJour(@Param("mois") int mois, @Param("annee") int annee , @Param("jour") int jour);
 
 
+
+
     //Nombre de voiture vendu par mois par ans
     @Query("SELECT COUNT(a) FROM Annonce a WHERE a.etat=10 AND MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee")
     public int voitureVenduParMoisParAnnee(@Param("mois") int mois, @Param("annee") int annee);
+
+
+    @Query("SELECT COUNT(a) FROM Annonce a WHERE a.modele.marque.idMarque= :marque and  a.etat=10 AND MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee")
+    public int voitureMarqueVenduParMoisParAnnee(@Param("marque") int idMarque ,@Param("mois") int mois, @Param("annee") int annee);
 
 
     @Query("SELECT a.modele.marque.nomMarque,COUNT(a) as count FROM Annonce a WHERE a.etat=10 AND MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee GROUP BY a.modele.marque ORDER BY count DESC LIMIT 1")

@@ -90,6 +90,12 @@ public class AnnonceController {
     public int[] getStatNbVoitureVenduParAnnee(@RequestParam int annee){
         return annonceService.nbVoitureVenduMoisAnnee(annee);
     }
+    //Nombre voiture vendu ao amin 'ny année iray par mois
+    @GetMapping("/statNbVoitureMarqueVenduAnnee")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public int[] getStatNbVoitureVenduMarqueParAnnee(@RequestParam int idMarque ,@RequestParam int annee){
+        return annonceService.nbVoitureMarqueVenduMoisAnnee(idMarque,annee);
+    }
 
     //Nombre voiture vendu ao amin 'ny année iray par mois
     @GetMapping("/bestMarque")
