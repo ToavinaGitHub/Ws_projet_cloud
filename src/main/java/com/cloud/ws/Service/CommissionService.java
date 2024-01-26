@@ -5,6 +5,7 @@ import com.cloud.ws.Repository.CommissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CommissionService {
@@ -21,6 +22,10 @@ public class CommissionService {
         commission.setDateCommission(date);
         
         return commissionRepository.save(commission);
+    }
+
+    public List<Commission> all(){
+        return commissionRepository.findAll();
     }
 
     public Commission getCommissionActuel(){

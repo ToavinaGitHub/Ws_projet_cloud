@@ -216,6 +216,16 @@ public class AnnonceService {
         return res;
     }
 
+    //Voiture par marque par mois par année
+
+    public int[] nbVoitureMarqueVenduMoisAnnee(int idMarque,int annee){
+        int[] res = new int[12];
+        for (int i = 1; i <= 12 ; i++) {
+            res[i-1] = annonceRepository.voitureMarqueVenduParMoisParAnnee(idMarque,i,annee);
+        }
+        return res;
+    }
+
     //Marque mar mois
     public List<String> bestSoldes(int annee){
         List<Marque> all = new ArrayList<>();
