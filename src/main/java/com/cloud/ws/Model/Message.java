@@ -1,39 +1,33 @@
 package com.cloud.ws.Model;
 
 import jakarta.persistence.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
-
+@Document(collection = "message")
 public class Message {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMessage;
 
-    @Column(name = "message", columnDefinition = "TEXT")
     private String message;
 
-    @Column(name = "dateMessage")
-    private Timestamp dateMessage;
-
-    @Column(name = "etat")
+    private LocalDateTime dateMessage;
     private int etat;
 
-    @ManyToOne
-    @JoinColumn(name = "sender", nullable = false)
-    private Utilisateur sender;
+    private int idSender;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver", nullable = false)
-    private Utilisateur receiver;
+    private int idReceiver;
 
-    public Message(int idMessage, String message, Timestamp dateMessage, int etat, Utilisateur sender, Utilisateur receiver) {
+    public Message(int idMessage, String message, LocalDateTime dateMessage, int etat, int idSender, int idReceiver) {
         this.idMessage = idMessage;
         this.message = message;
         this.dateMessage = dateMessage;
         this.etat = etat;
-        this.sender = sender;
-        this.receiver = receiver;
+        this.idSender = idSender;
+        this.idReceiver = idReceiver;
     }
 
     public Message() {
@@ -55,11 +49,11 @@ public class Message {
         this.message = message;
     }
 
-    public Timestamp getDateMessage() {
+    public LocalDateTime getDateMessage() {
         return dateMessage;
     }
 
-    public void setDateMessage(Timestamp dateMessage) {
+    public void setDateMessage(LocalDateTime dateMessage) {
         this.dateMessage = dateMessage;
     }
 
@@ -71,19 +65,19 @@ public class Message {
         this.etat = etat;
     }
 
-    public Utilisateur getSender() {
-        return sender;
+    public int getIdSender() {
+        return idSender;
     }
 
-    public void setSender(Utilisateur sender) {
-        this.sender = sender;
+    public void setIdSender(int idSender) {
+        this.idSender = idSender;
     }
 
-    public Utilisateur getReceiver() {
-        return receiver;
+    public int getIdReceiver() {
+        return idReceiver;
     }
 
-    public void setReceiver(Utilisateur receiver) {
-        this.receiver = receiver;
+    public void setIdReceiver(int idReceiver) {
+        this.idReceiver = idReceiver;
     }
 }

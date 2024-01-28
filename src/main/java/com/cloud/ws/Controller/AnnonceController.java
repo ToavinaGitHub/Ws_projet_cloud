@@ -3,10 +3,15 @@ package com.cloud.ws.Controller;
 
 import com.cloud.ws.Model.*;
 import com.cloud.ws.Repository.*;
+import com.cloud.ws.Service.AnnonceFavorisService;
 import com.cloud.ws.Service.AnnonceService;
+import com.cloud.ws.Service.SaryAnnonceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
+import org.springframework.http .ResponseEntity;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -28,11 +33,23 @@ public class AnnonceController {
     @Autowired
     CarburantRepository carburantRepository;
 
-    AnnonceService annonceService;
+    @Autowired
+    UtilisateurRepository utilisateurRepository;
 
     @Autowired
-    public AnnonceController(AnnonceService annonceService) {
+            AnnonceRepository annonceRepository;
+
+    AnnonceService annonceService;
+
+    SaryAnnonceService saryAnnonceService;
+
+    AnnonceFavorisService annonceFavorisService;
+
+    @Autowired
+    public AnnonceController(AnnonceService annonceService ,SaryAnnonceService saryAnnonceService,AnnonceFavorisService annonceFavorisService) {
         this.annonceService = annonceService;
+        this.saryAnnonceService = saryAnnonceService;
+        this.annonceFavorisService = annonceFavorisService;
     }
     /*------------CRUD---------------*/
     //All annonce
@@ -60,6 +77,16 @@ public class AnnonceController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public Iterable<Annonce> getAnnonceClientHistorique(@RequestParam int idClient){
         return annonceService.getAnnonceClientHistorique(idClient);
+    }
+
+
+    //tous les annonces d'un client
+    @GetMapping("/annoncesUser")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Iterable<Annonce> getAnnonceUser(@RequestParam int idClient){
+
+        Utilisateur u = utilisateurRepository.findUtilisateurByIdUtilisateur(idClient);
+        return annonceService.getByUser(u);
     }
 
     //Annonces favoris client
@@ -127,10 +154,25 @@ public class AnnonceController {
         return 0.0;
     }
 
-    @PostMapping("/Annonce/save")
+    @PostMapping(value = "/Annonce/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<String> save(@RequestBody Annonce a){
+    public ResponseEntity<String> save(@RequestPart("a") Annonce a , @RequestPart("file") List<MultipartFile> files){
         annonceService.save(a);
+
+        for (MultipartFile file : files) {
+            try {
+                byte[] bytes = file.getBytes();
+                String base64Image = Base64Utils.encodeToString(bytes);
+                SaryAnnonce temp = new SaryAnnonce();
+                temp.setSary(base64Image);
+                temp.setAnnonce(a);
+
+                saryAnnonceService.save(temp);
+                // Do something with the base64Image (e.g., save it, etc.)
+            } catch (Exception e) {
+                return ResponseEntity.status(500).body("Error processing files");
+            }
+        }
         return ResponseEntity.ok("Annonce inséré avec succes");
     }
 
@@ -155,4 +197,32 @@ public class AnnonceController {
         annonceService.AnnonceToVendu(idAnnonce);
         return ResponseEntity.ok("Annonce vendu avec succes");
     }
+
+
+    /*------------------Mettre annonce en favoris----------------------*/
+
+
+    @PostMapping("annonceFavoris/save")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<String> annonceToFavoris(@RequestParam int idUser,@RequestParam int idAnnonce){
+        AnnonceFavoris an = new AnnonceFavoris();
+        Utilisateur u = utilisateurRepository.findUtilisateurByIdUtilisateur(idUser);
+        Annonce a = annonceRepository.findAnnonceByIdAnnonce(idAnnonce);
+
+        an.setUtilisateur(u);
+        an.setAnnonce(a);
+
+        annonceFavorisService.save(an);
+
+        return ResponseEntity.ok("Annonce mis en favori");
+    }
+
+    /*-------Recherche multiple-------*/
+
+    @GetMapping("/Annonces/search")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public List<Annonce> rechercheMulti(@RequestBody RechercheMultiple rechercheMultiple){
+        return annonceService.searchAnnonces(rechercheMultiple);
+    }
 }
+
