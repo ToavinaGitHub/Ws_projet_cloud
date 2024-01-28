@@ -10,6 +10,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur,Integer
     public Utilisateur findUtilisateurByIdUtilisateur(int idUtilisateur);
 
 
+
     public Optional<Utilisateur> findByEmail(String email);
 
 

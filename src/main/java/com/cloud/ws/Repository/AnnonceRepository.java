@@ -16,6 +16,8 @@ import java.util.Vector;
 
 public interface AnnonceRepository extends JpaRepository<Annonce,Integer> {
 
+
+    public List<Annonce> findAnnonceByUtilisateur(Utilisateur u);
     public Annonce findAnnonceByIdAnnonce(int idAnnonce);
     public List<Annonce> findAnnonceByEtat(int idEtat);
     public List<Annonce> findAnnonceByUtilisateurAndEtat(Utilisateur u,int etat);
@@ -30,8 +32,6 @@ public interface AnnonceRepository extends JpaRepository<Annonce,Integer> {
     //Nombre d'annonce par mois par année par jours
     @Query("SELECT COUNT(a) FROM Annonce a WHERE MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee AND DAY(a.dateAnnonce) = :jour")
     int countByMoisAndAnneeAndJour(@Param("mois") int mois, @Param("annee") int annee , @Param("jour") int jour);
-
-
 
 
     //Nombre de voiture vendu par mois par ans

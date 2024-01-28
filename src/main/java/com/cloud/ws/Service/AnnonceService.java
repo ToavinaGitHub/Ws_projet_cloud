@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.Vector;
+import java.util.stream.Collectors;
 
 @Service
 public class AnnonceService {
@@ -35,6 +36,14 @@ public class AnnonceService {
 
     @Autowired
     SaryAnnonceRepository saryAnnonceRepository;
+
+
+
+    //Annonce d'un client
+
+    public List<Annonce> getByUser(Utilisateur u){
+        return annonceRepository.findAnnonceByUtilisateur(u);
+    }
 
     public void save(Annonce annonce){
         annonceRepository.save(annonce);
@@ -259,8 +268,40 @@ public class AnnonceService {
         return annonceRepository.prixParAns(annee);
     }
 
-    /*--------------------Some mobile app needs---------------------*/
+    /*--------------------Recherche multiple---------------------*/
 
+    public List<Annonce> searchAnnonces(RechercheMultiple rechercheMultiple) {
+        List<Annonce> allAnnonces = annonceRepository.findAll();
+
+        return allAnnonces.stream()
+                .filter(annonce -> matchCriteria(annonce, rechercheMultiple))
+                .collect(Collectors.toList());
+    }
+
+    private boolean matchCriteria(Annonce annonce, RechercheMultiple rechercheMultiple) {
+        boolean matchKeyword = rechercheMultiple.getKeyword() == null ||
+                annonce.getDescription().toLowerCase().contains(rechercheMultiple.getKeyword().toLowerCase());
+
+
+        boolean matchCategorie = rechercheMultiple.getCategorie() == null ||
+                annonce.getModele().getCategorie().getIdCategorie()==rechercheMultiple.getCategorie().getIdCategorie();
+
+        boolean matchMarque = rechercheMultiple.getMarque() == null ||
+                annonce.getModele().getMarque().getIdMarque()==rechercheMultiple.getMarque().getIdMarque();
+
+        boolean matchModele = rechercheMultiple.getModele() == null ||
+                annonce.getModele().getIdModele()==rechercheMultiple.getModele().getIdModele();
+
+        boolean matchPrix = (rechercheMultiple.getPrixMin()==0 && rechercheMultiple.getPrixMax()==0) || (annonce.getPrixDemande()>=rechercheMultiple.getPrixMin() && annonce.getPrixDemande()<=rechercheMultiple.getPrixMax());
+
+
+        boolean matchKilometrage = (rechercheMultiple.getMinKilometrage()==0 && rechercheMultiple.getMaxKilometrage()==0) || (Double.parseDouble(annonce.getKilometrage())>=rechercheMultiple.getMinKilometrage() && Double.parseDouble(annonce.getKilometrage())<=rechercheMultiple.getMaxKilometrage());
+
+        boolean matchDate = (rechercheMultiple.getMinDate()==null && rechercheMultiple.getMaxDate()==null) || annonce.getDateAnnonce().after(rechercheMultiple.getMinDate()) && annonce.getDateAnnonce().before(rechercheMultiple.getMaxDate());
+
+        return  matchDate & matchKilometrage & matchPrix &  matchKeyword && matchDate && matchCategorie & matchModele & matchMarque;
+
+    }
 
 
 }
