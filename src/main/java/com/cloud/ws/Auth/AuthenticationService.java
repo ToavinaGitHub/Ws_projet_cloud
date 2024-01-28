@@ -34,7 +34,13 @@ public class AuthenticationService {
         u.setTel(request.getTel());
         u.setSexe(request.getSexe());
         u.setIsAdmin(request.getIsAdmin());
-        u.setRole(Role.USER);
+
+        if(u.getIsAdmin()==1){
+            u.setRole(Role.ADMIN);
+        } else if (u.getIsAdmin()==0) {
+            u.setRole(Role.USER);
+        }
+
 
         utilisateurRepository.save(u);
         var jwtToken = jwtService.generateToken(u);
@@ -46,7 +52,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request) throws Exception {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -57,9 +63,37 @@ public class AuthenticationService {
 
         Utilisateur u = utilisateurRepository.findByEmail(request.getEmail())
                 .orElseThrow();
+
+        if(u.getRole()==Role.USER){
+            throw new Exception("You're not admin");
+        }else{
+            var jwtToken = jwtService.generateToken(u);
+
+            return AuthenticationResponse.builder()
+                    .token(jwtToken)
+                    .build();
+        }
+
+
+    }
+
+    public AuthenticationResponse authenticateClient(AuthenticationRequest request) {
+
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        Utilisateur u = utilisateurRepository.findByEmail(request.getEmail())
+                .orElseThrow();
+
+
         var jwtToken = jwtService.generateToken(u);
 
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .build();}
+                .build();
+    }
 }
