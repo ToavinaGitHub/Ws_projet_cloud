@@ -79,6 +79,10 @@ public class AnnonceService {
         return annonceFavorisRepository.getByUtilisateur(idClient);
     }
 
+    public Annonce getById(int idAnnonce){
+        return annonceRepository.findAnnonceByIdAnnonce(idAnnonce);
+    }
+
     //Mettre annonce en favoris
     public String setAnnonceToFav(int idUser, int idAnnonce) throws Exception {
         Annonce a = annonceRepository.findAnnonceByIdAnnonce(idAnnonce);

@@ -224,5 +224,11 @@ public class AnnonceController {
     public List<Annonce> rechercheMulti(@RequestBody RechercheMultiple rechercheMultiple){
         return annonceService.searchAnnonces(rechercheMultiple);
     }
+
+    @GetMapping("/Annonce")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Annonce details(@RequestParam int idAnnonce){
+        return annonceService.getById(idAnnonce);
+    }
 }
 
