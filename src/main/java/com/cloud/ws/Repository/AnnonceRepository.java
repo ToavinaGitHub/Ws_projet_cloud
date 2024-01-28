@@ -43,8 +43,11 @@ public interface AnnonceRepository extends JpaRepository<Annonce,Integer> {
     public int voitureMarqueVenduParMoisParAnnee(@Param("marque") int idMarque ,@Param("mois") int mois, @Param("annee") int annee);
 
 
-    @Query("SELECT a.modele.marque.nomMarque,COUNT(a) as count FROM Annonce a WHERE a.etat=10 AND MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee GROUP BY a.modele.marque ORDER BY count DESC LIMIT 1")
+    @Query("SELECT a.modele.marque.nomMarque, COUNT(a) as count FROM Annonce a WHERE a.etat=10 AND MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee GROUP BY a.modele.marque ORDER BY count DESC LIMIT 1")
     public String bestCarSoldes(@Param("mois") int mois, @Param("annee") int annee);
+
+    @Query("SELECT COALESCE(COUNT(a), 0) as count FROM Annonce a WHERE a.etat = 10 AND MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee GROUP BY a.modele.marque ORDER BY count DESC LIMIT 1")
+    public Integer bestCarSoldesCount(@Param("mois") int mois, @Param("annee") int annee);
 
 
     //Nombre de voiture vendu par mois par ans
