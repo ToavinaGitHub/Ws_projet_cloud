@@ -130,7 +130,14 @@ public class AnnonceController {
     public List<String> getBestMarque(@RequestParam int annee){
         return annonceService.bestSoldes(annee);
     }
+
+    @GetMapping("/bestMarqueCount")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public List<Integer> getBestMarqueCount(@RequestParam int annee){
+        return annonceService.bestSoldesCount(annee);
+    }
     //Nombre voiture vendu par jour hoan année sy mois donné
+
     @GetMapping("/statNbVoiturmeVenduAnneeMois")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public int[] getStatNbVoitureVenduParAnneeParMois(@RequestParam int annee,@RequestParam int mois){

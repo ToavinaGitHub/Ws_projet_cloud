@@ -249,6 +249,16 @@ public class AnnonceService {
         return res;
     }
 
+    public List<Integer> bestSoldesCount(int annee){
+        List<Integer> res = new ArrayList<>();
+        for (int i = 1; i <= 12 ; i++) {
+            res.add((annonceRepository.bestCarSoldesCount(i,annee)));
+        }
+        return res;
+    }
+
+
+
     //Nombre de voiture vendu par mois par année par jour
     public int[] nbVoitureVenduMoisAnneeJours(int mois,int annee){
         int[] res = new int[30];
