@@ -1,6 +1,7 @@
 package com.cloud.ws.Controller;
 
 import com.cloud.ws.Auth.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,8 +39,13 @@ public class AuthController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest request){
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody AuthenticationRequest request) throws Exception {
         return ResponseEntity.ok(authenticationService.authenticate(request));
+    }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/authenticateClient")
+    public ResponseEntity<AuthenticationResponse> loginClient(@RequestBody AuthenticationRequest request) throws Exception {
+        return ResponseEntity.ok(authenticationService.authenticateClient(request));
     }
 }
