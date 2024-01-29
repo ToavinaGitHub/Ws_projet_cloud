@@ -77,7 +77,7 @@ public class AuthenticationService {
 
     }
 
-    public AuthenticationResponse authenticateClient(AuthenticationRequest request) {
+    public AuthenticationClientResponse authenticateClient(AuthenticationRequest request) {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -92,7 +92,8 @@ public class AuthenticationService {
 
         var jwtToken = jwtService.generateToken(u);
 
-        return AuthenticationResponse.builder()
+        return AuthenticationClientResponse.builder()
+                .id(u.getIdUtilisateur())
                 .token(jwtToken)
                 .build();
     }
