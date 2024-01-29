@@ -27,24 +27,24 @@ public class SecurityConfiguration {
     private  AuthenticationProvider authenticationProvider;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http
-                .cors()
-                .and()
-                .csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/register","/api/v1/auth/authenticate","/api/v1/auth/authenticateClient","/Annonces","/AnnoncesDispo","/Annonce","/Annonces/search")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter , UsernamePasswordAuthenticationFilter.class);
+            http
+                    .cors()
+                    .and()
+                    .csrf().disable()
+                    .authorizeHttpRequests()
+                    .requestMatchers("/api/v1/auth/register","/api/v1/auth/authenticate","/api/v1/auth/authenticateClient","/Annonces","/AnnoncesDispo","/Annonce","/Annonces/search","/necessaireFront/**")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                    .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .and()
+                    .authenticationProvider(authenticationProvider)
+                    .addFilterBefore(jwtAuthFilter , UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+            return http.build();
+        }
 }

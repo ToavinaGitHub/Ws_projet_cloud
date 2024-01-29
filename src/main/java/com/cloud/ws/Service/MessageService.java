@@ -20,7 +20,6 @@ public class MessageService {
     UtilisateurRepository utilisateurRepository;
 
     public void save(Message s){
-
         s.setDateMessage(LocalDateTime.now());
         messageRepository.save(s);
     }
