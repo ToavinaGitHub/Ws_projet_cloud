@@ -45,7 +45,7 @@ public class AuthController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/authenticateClient")
-    public ResponseEntity<AuthenticationResponse> loginClient(@RequestBody AuthenticationRequest request) throws Exception {
+    public ResponseEntity<AuthenticationClientResponse> loginClient(@RequestBody AuthenticationRequest request) throws Exception {
         return ResponseEntity.ok(authenticationService.authenticateClient(request));
     }
 }
