@@ -5,6 +5,7 @@ import com.cloud.ws.Model.*;
 import com.cloud.ws.Repository.*;
 import com.cloud.ws.Service.AnnonceFavorisService;
 import com.cloud.ws.Service.AnnonceService;
+import com.cloud.ws.Service.CommissionService;
 import com.cloud.ws.Service.SaryAnnonceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -45,11 +46,14 @@ public class AnnonceController {
 
     AnnonceFavorisService annonceFavorisService;
 
+    CommissionService commissionService;
+
     @Autowired
-    public AnnonceController(AnnonceService annonceService ,SaryAnnonceService saryAnnonceService,AnnonceFavorisService annonceFavorisService) {
+    public AnnonceController(AnnonceService annonceService ,SaryAnnonceService saryAnnonceService,AnnonceFavorisService annonceFavorisService,CommissionService commissionService) {
         this.annonceService = annonceService;
         this.saryAnnonceService = saryAnnonceService;
         this.annonceFavorisService = annonceFavorisService;
+        this.commissionService = commissionService;
     }
     /*------------CRUD---------------*/
     //All annonce
@@ -63,6 +67,12 @@ public class AnnonceController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public List<Annonce> getAllAnnonceDemande(){
         return annonceService.getAnnonceEnDemande();
+    }
+
+    @GetMapping("/NbAnnoncesEnDemande")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public int getNbAnnonceDemande(){
+        return annonceService.nombreAnnonceEnDemande();
     }
 
     //Annonce mbola dispo
@@ -164,6 +174,8 @@ public class AnnonceController {
     @PostMapping(value = "/Annonce/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<String> save(@RequestPart("a") Annonce a , @RequestPart("file") List<MultipartFile> files){
+
+        a.setCommission(commissionService.getCommissionActuel());
         annonceService.save(a);
 
         for (MultipartFile file : files) {
