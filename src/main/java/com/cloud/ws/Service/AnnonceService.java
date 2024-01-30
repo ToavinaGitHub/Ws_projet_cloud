@@ -58,6 +58,10 @@ public class AnnonceService {
         return annonceRepository.findAnnonceByEtat(0);
     }
 
+    public int nombreAnnonceEnDemande(){
+        return annonceRepository.findAnnonceByEtat(0).size();
+    }
+
     //Maka annonce izay mbola tsy vendu
     public List<Annonce> getAnnonceDispo(){
         return annonceRepository.findAnnonceByEtat(5);

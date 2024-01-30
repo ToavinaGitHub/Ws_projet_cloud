@@ -69,6 +69,12 @@ public class AnnonceController {
         return annonceService.getAnnonceEnDemande();
     }
 
+    @GetMapping("/NbAnnoncesEnDemande")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public int getNbAnnonceDemande(){
+        return annonceService.nombreAnnonceEnDemande();
+    }
+
     //Annonce mbola dispo
     @GetMapping("/AnnoncesDispo")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
