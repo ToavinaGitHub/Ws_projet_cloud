@@ -28,4 +28,11 @@ public class UtilisateurController {
         return ResponseEntity.ok("Hello from secured");
     }
 
+    @GetMapping("/utilisateur")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public Utilisateur getById(@RequestParam int id){
+        System.out.println("ato");
+        return utilisateurService.getById(id);
+    }
+
 }

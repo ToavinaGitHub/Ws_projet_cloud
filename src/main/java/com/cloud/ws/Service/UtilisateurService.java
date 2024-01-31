@@ -21,4 +21,8 @@ public class UtilisateurService {
         return utilisateur;
     }
 
+    public Utilisateur getById(int id){
+        return utilisateurRepository.findUtilisateurByIdUtilisateur(id);
+    }
+
 }
