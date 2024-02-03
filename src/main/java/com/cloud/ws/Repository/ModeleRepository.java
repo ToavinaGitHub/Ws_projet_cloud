@@ -16,5 +16,7 @@ public interface ModeleRepository extends JpaRepository<Modele, Long> {
     @Query("SELECT modele from Modele modele where modele.etat=0")
     public List<Modele> getAllModele();
 
+
+
     
 }
