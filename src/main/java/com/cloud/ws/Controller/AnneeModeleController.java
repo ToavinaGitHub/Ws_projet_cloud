@@ -33,4 +33,6 @@ public class AnneeModeleController {
         return anneeModeleService.getAllByModele(idModele);
     }
 
+
+
 }
