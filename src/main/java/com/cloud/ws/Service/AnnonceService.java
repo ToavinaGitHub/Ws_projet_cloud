@@ -289,7 +289,9 @@ public class AnnonceService {
     /*--------------------Recherche multiple---------------------*/
 
     public List<Annonce> searchAnnonces(RechercheMultiple rechercheMultiple) {
+
         List<Annonce> allAnnonces = annonceRepository.findAnnonceByEtat(5);
+
 
         return allAnnonces.stream()
                 .filter(annonce -> matchCriteria(annonce, rechercheMultiple))
