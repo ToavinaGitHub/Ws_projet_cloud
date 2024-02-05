@@ -54,4 +54,31 @@ public class MessageService {
         return new ArrayList<>(userIds);
     }
 
+    public List<Utilisateur> getUsersWithLastMessage(int userId) {
+
+        System.out.println("haha");
+        List<Message> messages = messageRepository.getConversationsForUser(userId);
+
+        Map<Utilisateur, Message> lastMessages = new HashMap<>();
+
+        for (Message message : messages) {
+            Utilisateur otherUser = null;
+            Message lastMessage = lastMessages.getOrDefault(otherUser, null);
+
+            if (message.getIdSender() != userId) {
+                otherUser = utilisateurRepository.findUtilisateurByIdUtilisateur(message.getIdSender());
+            } else if (message.getIdReceiver() != userId) {
+                otherUser = utilisateurRepository.findUtilisateurByIdUtilisateur(message.getIdReceiver());
+            }
+
+            if (otherUser != null) {
+                if (lastMessage == null || message.getDateMessage().compareTo(lastMessage.getDateMessage()) > 0) {
+                    lastMessages.put(otherUser, message);
+                }
+            }
+        }
+
+        return new ArrayList<>(lastMessages.keySet());
+    }
+
 }

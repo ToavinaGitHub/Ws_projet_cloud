@@ -1,6 +1,5 @@
 package com.cloud.ws.Controller;
 
-
 import com.cloud.ws.Model.*;
 import com.cloud.ws.Repository.*;
 import com.cloud.ws.Service.AnnonceFavorisService;
@@ -10,12 +9,13 @@ import com.cloud.ws.Service.SaryAnnonceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http .ResponseEntity;
+
 import org.springframework.util.Base64Utils;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-
 @RestController
 public class AnnonceController {
 
@@ -196,7 +196,25 @@ public class AnnonceController {
     }
 
 
-        @PostMapping("/Annonce/validation")
+    @PostMapping(value = "/Annonce/saveImgbb", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<String> saveImgBB(@RequestPart("a") Annonce a , @RequestPart("sary") List<String> files){
+
+        a.setCommission(commissionService.getCommissionActuel());
+        annonceService.save(a);
+
+        for (String file : files) {
+                SaryAnnonce temp = new SaryAnnonce();
+                temp.setSary(file);
+                temp.setAnnonce(a);
+                saryAnnonceService.save(temp);
+        }
+        return ResponseEntity.ok("Annonce inséré avec succes");
+    }
+
+
+
+    @PostMapping("/Annonce/validation")
         @CrossOrigin(origins = "*", allowedHeaders = "*")
     public ResponseEntity<String> validerAnnonce(@RequestParam int idAnnonce){
         annonceService.ValiderAnnonce(idAnnonce);
@@ -244,10 +262,24 @@ public class AnnonceController {
         return annonceService.searchAnnonces(rechercheMultiple);
     }
 
+    @PostMapping("/Annonces/searchPost")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public List<Annonce> rechercheMultiPost(@RequestBody RechercheMultiple rechercheMultiple){
+        return annonceService.searchAnnonces(rechercheMultiple);
+    }
+
     @GetMapping("/Annonce")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public Annonce details(@RequestParam int idAnnonce){
         return annonceService.getById(idAnnonce);
     }
+
+    @DeleteMapping("/Annonce")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public void delAnnonceFavoris(@RequestParam int id){
+        AnnonceFavoris a = annonceFavorisService.getById(id);
+        annonceFavorisService.deleteAnnonceFavorie(a);
+    }
+
 }
 
