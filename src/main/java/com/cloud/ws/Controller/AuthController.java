@@ -15,7 +15,6 @@ public class AuthController {
         this.authenticationService = authenticationService;
     }
 
-
    /* @PostMapping("/auth/login")
     public String login(String email, String password)  {
         try {

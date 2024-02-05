@@ -43,4 +43,14 @@ public class MessageController {
         return messageService.getUsersInConversations(user);
     }
 
+
+    @GetMapping("/boiteDiscuWithMess")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public List<Utilisateur> boiteDiscus(@RequestParam int user){
+        System.out.println("haha");
+        return messageService.getUsersWithLastMessage(user);
+    }
+
+
+
 }

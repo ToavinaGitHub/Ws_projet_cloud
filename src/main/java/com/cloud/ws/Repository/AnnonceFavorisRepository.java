@@ -11,4 +11,7 @@ public interface AnnonceFavorisRepository extends JpaRepository<AnnonceFavoris,I
 
     @Query("SELECT a.annonce FROM AnnonceFavoris a WHERE a.utilisateur.idUtilisateur=?1 ")
     public Vector<Annonce> getByUtilisateur(int idUtilisateur);
+
+    public AnnonceFavoris findAnnonceFavorisByIdAnnonceFavoris(int id);
+
 }
