@@ -3,6 +3,7 @@ package com.cloud.ws.Service;
 import com.cloud.ws.Model.Annonce;
 import com.cloud.ws.Model.AnnonceFavoris;
 import com.cloud.ws.Model.Marque;
+import com.cloud.ws.Model.Utilisateur;
 import com.cloud.ws.Repository.AnnonceFavorisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,13 @@ public class AnnonceFavorisService {
     public void deleteAnnonceFavorie(AnnonceFavoris a){
         annonceFavorisRepository.delete(a);
     }
+
+    public void delete(Annonce a, Utilisateur u){
+
+        AnnonceFavoris af = annonceFavorisRepository.findAnnonceFavorisByUtilisateurAndAndAnnonce(u,a);
+
+        annonceFavorisRepository.delete(af);
+    }
+
 
 }
