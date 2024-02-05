@@ -38,6 +38,9 @@ public class AnnonceController {
     UtilisateurRepository utilisateurRepository;
 
     @Autowired
+    AnnonceFavorisRepository annonceFavorisRepository;
+
+    @Autowired
             AnnonceRepository annonceRepository;
 
     AnnonceService annonceService;
@@ -246,6 +249,12 @@ public class AnnonceController {
         Utilisateur u = utilisateurRepository.findUtilisateurByIdUtilisateur(idUser);
         Annonce a = annonceRepository.findAnnonceByIdAnnonce(idAnnonce);
 
+        AnnonceFavoris temp = annonceFavorisRepository.findAnnonceFavorisByUtilisateurAndAndAnnonce(u,a);
+
+        if(temp!=null){
+            return ResponseEntity.ok("Annonce deja en favori");
+        }
+
         an.setUtilisateur(u);
         an.setAnnonce(a);
 
@@ -278,10 +287,11 @@ public class AnnonceController {
 
     @DeleteMapping("/Annonce")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public void delAnnonceFavoris(@RequestParam int id){
-        AnnonceFavoris a = annonceFavorisService.getById(id);
-        annonceFavorisService.deleteAnnonceFavorie(a);
+    public void delAnnonceFavoris(@RequestParam int idAnnonce,@RequestParam int idUser){
+        annonceFavorisService.delete(annonceRepository.findAnnonceByIdAnnonce(idAnnonce),utilisateurRepository.findUtilisateurByIdUtilisateur(idUser));
     }
+
+
 
 }
 
