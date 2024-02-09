@@ -56,12 +56,12 @@ public interface AnnonceRepository extends JpaRepository<Annonce,Integer> {
 
 
     //Prix voiture vendu par mois par ans
-    @Query("SELECT SUM(((a.prixVente)*c.valeur)/100) FROM Annonce a JOIN Commission  c on a.commission.idCommission = c.idCommission WHERE a.etat=10 and MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee")
+    @Query("SELECT SUM(((a.prixDemande)*c.valeur)/100) FROM Annonce a JOIN Commission  c on a.commission.idCommission = c.idCommission WHERE a.etat=10 and MONTH(a.dateAnnonce) = :mois AND YEAR(a.dateAnnonce) = :annee")
     public Double prixMoyenneVenduParMoisParAnnee(@Param("mois") int mois, @Param("annee") int annee);
 
 
     //Revenu par ans
-    @Query("SELECT SUM(((a.prixVente)*c.valeur)/100) FROM Annonce a JOIN Commission  c on a.commission.idCommission = c.idCommission WHERE a.etat=10 AND YEAR(a.dateAnnonce) = :annee GROUP BY YEAR(a.dateAnnonce)")
+    @Query("SELECT SUM(((a.prixDemande)*c.valeur)/100) FROM Annonce a JOIN Commission  c on a.commission.idCommission = c.idCommission WHERE a.etat=10 AND YEAR(a.dateAnnonce) = :annee GROUP BY YEAR(a.dateAnnonce)")
     public Double prixParAns( @Param("annee") int annee);
 
 
